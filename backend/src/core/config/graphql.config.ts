@@ -7,10 +7,24 @@ export function getGraphQLConfig(
   configService: ConfigService,
 ): ApolloDriverConfig {
   return {
-    playground: isDev(configService),
+    graphiql: isDev(configService),
     path: configService.getOrThrow<string>('GRAPHQL_PATH'),
     autoSchemaFile: join(process.cwd(), 'src/core/graphql/schema.gql'),
     sortSchema: true,
+    introspection: true,
     context: ({ req, res }) => ({ req, res }),
+    validationRules: [
+      // GraphQL validation rules
+    ],
+    formatError: (error) => {
+      if (error.extensions?.code === 'VALIDATION_ERROR') {
+        return {
+          message: error.message,
+          code: 'VALIDATION_ERROR',
+          details: error.extensions.details,
+        };
+      }
+      return error;
+    },
   };
 }

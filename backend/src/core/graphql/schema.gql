@@ -1,0 +1,60 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateTaskDto {
+  description: String
+  priority: Priority
+  status: TaskStatus
+  title: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createTask(data: CreateTaskDto!): TaskModel!
+  deleteTask(id: String!): TaskModel!
+  updateTask(data: UpdateTaskDto!, id: String!): TaskModel!
+}
+
+"""The priority level of a task"""
+enum Priority {
+  HIGH
+  LOW
+  MEDIUM
+  URGENT
+}
+
+type Query {
+  findAllTasks: [TaskModel!]!
+  findOneTask(id: String!): TaskModel!
+}
+
+type TaskModel {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  priority: Priority!
+  status: TaskStatus!
+  title: String!
+  updatedAt: DateTime!
+}
+
+"""The status of a task"""
+enum TaskStatus {
+  CANCELLED
+  DONE
+  IN_PROGRESS
+  REVIEW
+  TODO
+}
+
+input UpdateTaskDto {
+  description: String
+  priority: Priority
+  status: TaskStatus
+  title: String
+}
