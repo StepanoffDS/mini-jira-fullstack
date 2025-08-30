@@ -5,15 +5,15 @@ export function parseBoolean(value: string): boolean {
 
   if (typeof value === 'string') {
     const lowerValue = value.trim().toLowerCase();
-
     if (lowerValue === 'true') {
       return true;
     }
-
     if (lowerValue === 'false') {
       return false;
     }
   }
 
-  throw new Error(`Invalid boolean value: ${value}`);
+  throw new Error(
+    `Не удалось преобразовать значение "${value}" в логическое значение.`,
+  );
 }

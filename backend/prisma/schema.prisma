@@ -14,14 +14,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+
+  username    String  @unique
+  displayName String? @map("display_name")
+
+  avatar String?
+  bio    String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
 model Task {
   id          String     @id @default(cuid())
   title       String
   description String?
   status      TaskStatus @default(TODO)
   priority    Priority   @default(MEDIUM)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  @@map("tasks")
 }
 
 enum TaskStatus {
